@@ -1,5 +1,8 @@
 package uk.ac.cf.cs.beetle;
 
+import com.sun.imageio.plugins.common.ImageUtil;
+
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -70,7 +73,8 @@ public class GameLauncher implements ActionListener, ItemListener {
 		//=== Launch Panel and Button initialization =========
 		launchGamePanel = new JPanel();
 		//launchGamePanel.setBorder(border);
-		logo = new ImageIcon("/logo/logo.png");
+
+        logo = new ImageIcon(ImageUtil.class.getResource("/logo/logo.png"));
 		JLabel gameLogoLabel = new JLabel(logo);
 		launchButton = new JButton("Play Game!");
 		launchButton.addActionListener(new ActionListener(){

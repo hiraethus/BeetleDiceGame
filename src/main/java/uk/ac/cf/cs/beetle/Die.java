@@ -1,14 +1,13 @@
 package uk.ac.cf.cs.beetle;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
+import com.sun.imageio.plugins.common.ImageUtil;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Random;
 
 public class Die extends JComponent {
 	private Random dieNumberGenerator;
@@ -23,25 +22,15 @@ public class Die extends JComponent {
 	public Die() {
 		this.dieNumberGenerator = new Random();
 
-		// Loading BeetlePart images below...
+		// Loading die faces images below...
 		try {
-			face1 = ImageIO.read(new File(
-			"DiceFaceImages/face1.png"));
 
-			face2 = ImageIO.read(new File(
-			"DiceFaceImages/face2.png"));
-
-			face3 = ImageIO.read(new File(
-			"DiceFaceImages/face3.png"));
-
-			face4 = ImageIO.read(new File(
-			"DiceFaceImages/face4.png"));
-
-			face5 = ImageIO.read(new File(
-			"DiceFaceImages/face5.png"));
-
-			face6 = ImageIO.read(new File(
-			"DiceFaceImages/face6.png"));
+            face1 = ImageIO.read(ImageUtil.class.getResource("/DiceFaceImages/face1.png"));
+            face2 = ImageIO.read(ImageUtil.class.getResource("/DiceFaceImages/face2.png"));
+            face3 = ImageIO.read(ImageUtil.class.getResource("/DiceFaceImages/face3.png"));
+            face4 = ImageIO.read(ImageUtil.class.getResource("/DiceFaceImages/face4.png"));
+            face5 = ImageIO.read(ImageUtil.class.getResource("/DiceFaceImages/face5.png"));
+            face6 = ImageIO.read(ImageUtil.class.getResource("/DiceFaceImages/face6.png"));
 
 		} catch (IOException e) {
 		}

@@ -1,5 +1,7 @@
 package uk.ac.cf.cs.beetle;
 
+import com.sun.imageio.plugins.common.ImageUtil;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -41,47 +43,20 @@ public class Beetle extends JComponent {
 		System.out.println(currentDir.getAbsolutePath());
 		// Loading BeetlePart images below...
 		try {
-			background = ImageIO.read(new File(
-			"/BeetlePartImages/background.png"));
-			body = ImageIO
-			.read(new File(
-			"/BeetlePartImages/body.png"));
-			head = ImageIO
-			.read(new File(
-			"/BeetlePartImages/head.png"));
-			tail = ImageIO
-			.read(new File(
-			"/BeetlePartImages/tail.png"));
-			eye1 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/eye1.png"));
-			eye2 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/eye2.png"));
-			antenna1 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/antenna1.png"));
-			antenna2 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/antenna2.png"));
-			leg1 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/leg1.png"));
-			leg2 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/leg2.png"));
-			leg3 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/leg3.png"));
-			leg4 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/leg4.png"));
-			leg5 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/leg5.png"));
-			leg6 = ImageIO
-			.read(new File(
-			"/BeetlePartImages/leg6.png"));
+            background = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/background.png"));
+            body = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/body.png"));
+            head = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/head.png"));
+            tail = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/tail.png"));
+            eye1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye1.png"));
+            eye2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye2.png"));
+            antenna1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna1.png"));
+            antenna2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna2.png"));
+            leg1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg1.png"));
+            leg2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg2.png"));
+            leg3 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg3.png"));
+            leg4 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg4.png"));
+            leg5 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg5.png"));
+            leg6 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg6.png"));
 
 		} catch (IOException e) {
 		}
