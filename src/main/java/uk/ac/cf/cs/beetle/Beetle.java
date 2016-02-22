@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -16,6 +17,8 @@ import javax.swing.*;
 public class Beetle extends JComponent {
 	private Vector<BodyPart> beetleBodyParts;
 	public boolean textVisible = false; // REMOVE LATER!!
+
+	private Collection<IBodyPart> bodyParts;
 
 	// beetlePartImages
 	private BufferedImage background = null;
@@ -61,6 +64,10 @@ public class Beetle extends JComponent {
 		} catch (IOException e) {
 		}
 
+	}
+
+	public Collection<IBodyPart> getBodyParts() {
+		return bodyParts;
 	}
 
 	/**
