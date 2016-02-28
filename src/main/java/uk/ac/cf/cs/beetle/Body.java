@@ -13,4 +13,9 @@ public class Body implements IBodyPart {
 			throw new InvalidBodyPartSequence("The Beetle already has a body!");
 		}
 	}
+
+	@Override
+	public void accept(BeetleRenderer visitor) {
+		visitor.visit(this);
+	}
 }

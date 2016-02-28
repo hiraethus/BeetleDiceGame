@@ -17,16 +17,14 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class BeetleJComponent extends JComponent implements Beetle {
-	private Vector<BodyPart> beetleBodyParts;
+    private final BeetleRenderer beetleRenderer;
+    private Vector<BodyPart> beetleBodyParts;
 	public boolean textVisible = false; // REMOVE LATER!!
 
 	private Collection<IBodyPart> bodyParts = new ArrayList<>();
 
 	// beetlePartImages
 	private BufferedImage background = null;
-	private BufferedImage body = null;
-	private BufferedImage head = null;
-	private BufferedImage tail = null;
 	private BufferedImage eye1 = null;
 	private BufferedImage eye2 = null;
 	private BufferedImage antenna1 = null;
@@ -42,6 +40,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	 * Constructs a Beetle for the player with an array of null-type BodyParts.
 	 */
 	public BeetleJComponent() {
+        this.beetleRenderer = new BeetleRenderer(this.getGraphics());
 		this.setPreferredSize(new Dimension(200, 200));
 		beetleBodyParts = new Vector<BodyPart>(13);
 		File currentDir = new File(".");
@@ -49,9 +48,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 		// Loading BeetlePart images below...
 		try {
             background = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/background.png"));
-            body = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/body.png"));
-            head = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/head.png"));
-            tail = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/tail.png"));
             eye1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye1.png"));
             eye2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye2.png"));
             antenna1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna1.png"));
@@ -75,7 +71,9 @@ public class BeetleJComponent extends JComponent implements Beetle {
 
 	@Override
 	public void addBodyPart(IBodyPart bodyPart) throws InvalidBodyPartSequence {
-		throw new UnsupportedOperationException("Not yet implemented");
+        if (bodyPart.canAppendToBeetle(this)) {
+            this.bodyParts.add(bodyPart);
+        }
 	}
 
 	/**
@@ -87,27 +85,30 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	public void addBodyPart(BodyPart nextBodyPart) {
 
 		// Using if statement, leads to other more bodypart specific add methods
-		String nextBodyPartType = nextBodyPart.getType();
-		if (nextBodyPartType.equals("head")) {
-			System.out.println("Executing addHead method...");
-			this.addHead(nextBodyPart);
-		} else if (nextBodyPartType.equals("body")) {
-			System.out.println("Executing addBody method...");
-			this.addBody(nextBodyPart);
-		} else if (nextBodyPartType.equals("leg")) {
-			System.out.println("Executing addLeg method...");
-			this.addLeg(nextBodyPart);
-		} else if (nextBodyPartType.equals("antenna")) {
-			System.out.println("Executing addAntenna method...");
-			this.addAntenna(nextBodyPart);
-		} else if (nextBodyPartType.equals("eye")) {
-			System.out.println("Executing addEye method...");
-			this.addEye(nextBodyPart);
-		} else if (nextBodyPartType.equals("tail")) {
-			System.out.println("Executing addTail method...");
-			this.addTail(nextBodyPart);
-		}
-
+        try {
+            String nextBodyPartType = nextBodyPart.getType();
+            if (nextBodyPartType.equals("head")) {
+                System.out.println("Executing addHead method...");
+                this.addBodyPart(new Head());
+            } else if (nextBodyPartType.equals("body")) {
+                System.out.println("Executing addBody method...");
+                this.addBodyPart(new Body());
+            } else if (nextBodyPartType.equals("leg")) {
+                System.out.println("Executing addLeg method...");
+                this.addLeg(nextBodyPart);
+            } else if (nextBodyPartType.equals("antenna")) {
+                System.out.println("Executing addAntenna method...");
+                this.addAntenna(nextBodyPart);
+            } else if (nextBodyPartType.equals("eye")) {
+                System.out.println("Executing addEye method...");
+                this.addEye(nextBodyPart);
+            } else if (nextBodyPartType.equals("tail")) {
+                System.out.println("Executing addTail method...");
+                this.addBodyPart(new Tail());
+            }
+        } catch (InvalidBodyPartSequence invalidBodyPartSequence) {
+            invalidBodyPartSequence.printStackTrace();
+        }
 	}
 
 	/**
@@ -145,40 +146,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 			}
 		}
 		return bodyPartCount;
-	}
-
-	/**
-	 * If the Beetle doesn't already have a Head, the selected and the
-	 * nextBodyPart object is of Type "head", nextBodyPart will be added to the
-	 * beetleBodyParts array.
-	 * 
-	 * @param nextBodyPart
-	 *            Body, Head, Leg etc.
-	 */
-	private void addBody(BodyPart nextBodyPart) {
-		if (!(this.hasBodyPartOfType("body"))) {
-			beetleBodyParts.add(nextBodyPart);
-		} else {
-			// "This Beetle already has a Head!"
-		}
-	}
-
-	/**
-	 * If the Beetle has a Body and it doesn't already have a Tail, this method
-	 * adds nextBodyPart to the beetleBodyParts array.
-	 * 
-	 * @param nextBodyPart
-	 *            Body, Head, Leg etc.
-	 */
-	private void addTail(BodyPart nextBodyPart) {
-		if ((this.hasBodyPartOfType("body"))
-				&& !(this.hasBodyPartOfType("tail"))) {
-			beetleBodyParts.add(nextBodyPart);
-		} else if (!this.hasBodyPartOfType("body")) {
-			// "You need a body first before you can add a tail!"
-		} else {
-			// "The Beetle already has a Tail!
-		}
 	}
 
 	/**
@@ -244,23 +211,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	}
 
 	/**
-	 * If the Beetle has a Body and it doesn't already have a Head, this method
-	 * adds nextBodyPart to the beetleBodyParts array.
-	 * 
-	 * @param nextBodyPart
-	 *            Body, Head, Leg etc.
-	 */
-	private void addHead(BodyPart nextBodyPart) {
-		if (this.hasBodyPartOfType("body") && !(this.hasBodyPartOfType("head"))) {
-			beetleBodyParts.add(nextBodyPart);
-		} else if (!this.hasBodyPartOfType("body")) {
-			// "You need a body first before you can add a tail!"
-		} else {
-			// "The Beetle already has a Head!
-		}
-	}
-
-	/**
 	 * Removes last BodyPart added from array. For use with "Undo" option in
 	 * game. Added bonus to add but non-essential.
 	 */
@@ -297,9 +247,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		boolean hasBody = false;
-		boolean hasHead = false;
-		boolean hasTail = false;
 		int numberOfLegs = 0;
 		int numberOfAntennae = 0;
 		int numberOfEyes = 0;
@@ -321,25 +268,12 @@ public class BeetleJComponent extends JComponent implements Beetle {
 				numberOfAntennae++;
 			} else if (currentBodyPartType.equals("eye")) {
 				numberOfEyes++;
-			} else if (currentBodyPartType.equals("body")) {
-				hasBody = true;
-			} else if (currentBodyPartType.equals("head")) {
-				hasHead = true;
-			} else if (currentBodyPartType.equals("tail")) {
-				hasTail = true;
 			}
 		}
 
-		// Draw all the BodyParts
-		if (hasBody) {
-			g.drawImage(body, 0, 0, this.getWidth(), this.getHeight(), null);
-		}
-		if (hasHead) {
-			g.drawImage(head, 0, 0, this.getWidth(), this.getHeight(), null);
-		}
-		if (hasTail) {
-			g.drawImage(tail, 0, 0, this.getWidth(), this.getHeight(), null);
-		}
+        for (IBodyPart bp: bodyParts) {
+            bp.accept(beetleRenderer);
+        }
 
 		// draws legs
 		if (numberOfLegs == 0) {

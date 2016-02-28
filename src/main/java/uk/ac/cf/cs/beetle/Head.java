@@ -18,4 +18,9 @@ public class Head implements IBodyPart {
 
         return true;
     }
+
+    @Override
+    public void accept(BeetleRenderer visitor) {
+        visitor.visit(this);
+    }
 }
