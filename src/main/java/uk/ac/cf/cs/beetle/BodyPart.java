@@ -14,22 +14,22 @@ public class BodyPart {
 	public BodyPart(int diceNum) {
 		switch (diceNum) {
 		case 1:
-			this.setType("body");
+			this.setType("eye");
 			break;
 		case 2:
-			this.setType("head");
+			this.setType("antenna");
 			break;
 		case 3:
-			this.setType("eye");
-			break;
-		case 4:
 			this.setType("leg");
 			break;
+		case 4:
+			this.setType("tail");
+			break;
 		case 5:
-			this.setType("eye");
+			this.setType("head");
 			break;
 		case 6:
-			this.setType("antenna");
+			this.setType("body");
 			break;
 		default:
 			break;
