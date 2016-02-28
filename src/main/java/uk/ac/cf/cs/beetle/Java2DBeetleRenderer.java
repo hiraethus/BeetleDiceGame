@@ -12,6 +12,8 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
     private BufferedImage tail;
     private BufferedImage head;
     private BufferedImage body;
+
+    private int legCount = 0;
     private BufferedImage leg1;
     private BufferedImage leg2;
     private BufferedImage leg3;
@@ -19,7 +21,10 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
     private BufferedImage leg5;
     private BufferedImage leg6;
 
-    private int legCount = 0;
+    private int antennaCount = 0;
+    private BufferedImage antenna1;
+    private BufferedImage antenna2;
+
 
     public Java2DBeetleRenderer(Graphics g) {
         this.graphics = g;
@@ -33,6 +38,8 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
             leg4 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg4.png"));
             leg5 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg5.png"));
             leg6 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg6.png"));
+            antenna1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna1.png"));
+            antenna2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,6 +85,18 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
         } else if (legCount == 6) {
             graphics.drawImage(leg6, 0, 0, (int) graphics.getClipBounds().getWidth(), (int) graphics.getClipBounds().getHeight(), null);
         }
+    }
+
+    @Override
+    public void visit(Antenna antenna) {
+        antennaCount = antennaCount + 1;
+
+        if (antennaCount == 1) {
+            graphics.drawImage(antenna1, 0, 0, (int) graphics.getClipBounds().getWidth(), (int) graphics.getClipBounds().getHeight(), null);
+        } else if (antennaCount == 2) {
+            graphics.drawImage(antenna2, 0, 0, (int) graphics.getClipBounds().getWidth(), (int) graphics.getClipBounds().getHeight(), null);
+        }
+
     }
 
     @Override

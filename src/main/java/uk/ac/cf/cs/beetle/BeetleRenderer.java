@@ -9,5 +9,7 @@ public interface BeetleRenderer {
 
     void visit(Leg leg);
 
+    void visit(Antenna antenna);
+
     void reset();
 }

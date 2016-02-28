@@ -19,7 +19,6 @@ import javax.swing.*;
 public class BeetleJComponent extends JComponent implements Beetle {
     private BeetleRenderer beetleRenderer = null;
     private Vector<BodyPart> beetleBodyParts;
-	public boolean textVisible = false; // REMOVE LATER!!
 
 	private Collection<IBodyPart> bodyParts = new ArrayList<>();
 
@@ -27,8 +26,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	private BufferedImage background = null;
 	private BufferedImage eye1 = null;
 	private BufferedImage eye2 = null;
-	private BufferedImage antenna1 = null;
-	private BufferedImage antenna2 = null;
 
 	/**
 	 * Constructs a Beetle for the player with an array of null-type BodyParts.
@@ -44,9 +41,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
             background = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/background.png"));
             eye1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye1.png"));
             eye2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye2.png"));
-            antenna1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna1.png"));
-            antenna2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna2.png"));
-
 
 		} catch (IOException e) {
 		}
@@ -86,7 +80,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
             this.addBodyPart(new Leg());
         } else if (nextBodyPartType.equals("antenna")) {
             System.out.println("Executing addAntenna method...");
-            this.addAntenna(nextBodyPart);
+            this.addBodyPart(new Antenna());
         } else if (nextBodyPartType.equals("eye")) {
             System.out.println("Executing addEye method...");
             this.addEye(nextBodyPart);
@@ -154,27 +148,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	}
 
 	/**
-	 * If the Beetle has a Body and it has less than 2 antennae (i.e. 0 or 1),
-	 * this method adds nextBodyPart to the nextBodyPart to the beetleBodyParts
-	 * array
-	 * 
-	 * @param nextBodyPart
-	 *            e.g. Body, Head, Leg etc.
-	 */
-	private void addAntenna(BodyPart nextBodyPart) {
-		if (this.hasBodyPartOfType("head")) {
-			int numberOfAntennae = this.numberOfBodyPartType("antenna");
-			if (numberOfAntennae < 2) {
-				beetleBodyParts.add(nextBodyPart);
-			} else {
-				// "You already have two antennae!"
-			}
-		} else {
-			// "Your Beetle needs a Head first!"
-		}
-	}
-
-	/**
 	 * Removes last BodyPart added from array. For use with "Undo" option in
 	 * game. Added bonus to add but non-essential.
 	 */
@@ -210,7 +183,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	@Override
 	public void paint(Graphics g) {
         beetleRenderer = new Java2DBeetleRenderer(g);
-		int numberOfAntennae = 0;
 		int numberOfEyes = 0;
 
 		// Draw background
@@ -224,9 +196,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
 		// Eyes
 		for (BodyPart bodyPartType : beetleBodyParts) {
 			String currentBodyPartType = bodyPartType.getType();
-			if (currentBodyPartType.equals("antenna")) {
-				numberOfAntennae++;
-			} else if (currentBodyPartType.equals("eye")) {
+			if (currentBodyPartType.equals("eye")) {
 				numberOfEyes++;
 			}
 		}
@@ -234,18 +204,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
         for (IBodyPart bp: bodyParts) {
             bp.accept(beetleRenderer);
         }
-
-		// draw antennae
-		if (numberOfAntennae == 1) {
-			g.drawImage(antenna1, 0, 0, this.getWidth(), this.getHeight(), null);
-		} else if (numberOfAntennae == 2) {
-			g.drawImage(antenna1, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(antenna2, 0, 0, this.getWidth(), this.getHeight(), null);
-		} else if (numberOfAntennae > 2) {
-			// Throw TooManyBodyPartsException
-		} else if (numberOfAntennae < 0) {
-			// Throw NegativeValueException
-		}
 
 		// Draw eyes
 		if (numberOfEyes == 1) {
