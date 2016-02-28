@@ -1,4 +1,4 @@
-package uk.ac.cf.cs.beetle;
+package uk.ac.cf.cs.beetle.exception;
 
 
 public class InvalidBodyPartSequence extends Exception {

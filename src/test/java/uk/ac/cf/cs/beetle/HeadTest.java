@@ -1,6 +1,7 @@
 package uk.ac.cf.cs.beetle;
 
 import org.junit.Test;
+import uk.ac.cf.cs.beetle.exception.InvalidBodyPartSequence;
 
 import java.util.ArrayList;
 

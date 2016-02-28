@@ -4,6 +4,9 @@ import static org.junit.Assert.fail;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
+import uk.ac.cf.cs.beetle.exception.InvalidDieRollToBodyPartMapping;
+import uk.ac.cf.cs.beetle.exception.InvalidDieValue;
+
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.Collection;

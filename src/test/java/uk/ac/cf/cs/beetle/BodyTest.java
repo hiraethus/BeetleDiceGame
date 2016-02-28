@@ -1,6 +1,8 @@
 package uk.ac.cf.cs.beetle;
 
 import org.junit.Test;
+import uk.ac.cf.cs.beetle.exception.InvalidBodyPartSequence;
+
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.mock;
 import static org.mockito.BDDMockito.given;

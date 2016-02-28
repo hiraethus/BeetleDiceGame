@@ -1,5 +1,7 @@
 package uk.ac.cf.cs.beetle;
 
+import uk.ac.cf.cs.beetle.exception.InvalidBodyPartSequence;
+
 public class Body implements IBodyPart {
 	@Override
 	public boolean canAppendToBeetle(Beetle beetle) throws InvalidBodyPartSequence {
