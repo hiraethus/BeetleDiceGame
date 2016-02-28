@@ -2,19 +2,19 @@ package uk.ac.cf.cs.beetle;
 
 public abstract class Player {
 	private String playerName;
-	private Beetle playerBeetle;
+	private BeetleJComponent playerBeetle;
 
 	public Player() {
 		this.playerName = "";
-		this.playerBeetle = new Beetle();
+		this.playerBeetle = new BeetleJComponent();
 	}
 
 	public Player(String name) {
 		this.playerName = name;
-		this.playerBeetle = new Beetle();
+		this.playerBeetle = new BeetleJComponent();
 	}
 
-	public Beetle getBeetle() {
+	public BeetleJComponent getBeetle() {
 		return playerBeetle;
 	}
 

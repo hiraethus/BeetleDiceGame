@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.util.Vector;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -107,7 +106,7 @@ public class GameView implements ActionListener {
 	 * @return
 	 */
 	public JPanel makePlayerPanel(final Player p) {
-		final Beetle beetle = p.getBeetle();
+		final BeetleJComponent beetle = p.getBeetle();
 		beetle.setBorder(new EtchedBorder());
 		beetle.repaint();
 		final Die playerDice = new Die();
