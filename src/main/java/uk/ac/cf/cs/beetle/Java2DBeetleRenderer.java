@@ -25,6 +25,10 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
     private BufferedImage antenna1;
     private BufferedImage antenna2;
 
+    private int eyeCount = 0;
+    private BufferedImage eye1;
+    private BufferedImage eye2;
+
 
     public Java2DBeetleRenderer(Graphics g) {
         this.graphics = g;
@@ -38,6 +42,8 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
             leg4 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg4.png"));
             leg5 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg5.png"));
             leg6 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg6.png"));
+            eye1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye1.png"));
+            eye2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye2.png"));
             antenna1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna1.png"));
             antenna2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna2.png"));
         } catch (IOException e) {
@@ -100,7 +106,21 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
     }
 
     @Override
+    public void visit(Eye eye) {
+        eyeCount = eyeCount + 1;
+
+        if (eyeCount == 1) {
+            graphics.drawImage(eye1, 0, 0, (int) graphics.getClipBounds().getWidth(), (int) graphics.getClipBounds().getHeight(), null);
+        } else if (eyeCount == 2) {
+            graphics.drawImage(eye2, 0, 0, (int) graphics.getClipBounds().getWidth(), (int) graphics.getClipBounds().getHeight(), null);
+        }
+
+    }
+
+    @Override
     public void reset() {
         this.legCount = 0;
+        this.antennaCount = 0;
+        this.eyeCount = 0;
     }
 }

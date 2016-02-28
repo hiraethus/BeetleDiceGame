@@ -11,5 +11,7 @@ public interface BeetleRenderer {
 
     void visit(Antenna antenna);
 
+    void visit(Eye eye);
+
     void reset();
 }
