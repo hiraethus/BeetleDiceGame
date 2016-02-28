@@ -82,32 +82,28 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	 * 
 	 * @param nextBodyPart
 	 */
-	public void addBodyPart(BodyPart nextBodyPart) {
+	public void addBodyPart(BodyPart nextBodyPart) throws InvalidBodyPartSequence {
 
 		// Using if statement, leads to other more bodypart specific add methods
-        try {
-            String nextBodyPartType = nextBodyPart.getType();
-            if (nextBodyPartType.equals("head")) {
-                System.out.println("Executing addHead method...");
-                this.addBodyPart(new Head());
-            } else if (nextBodyPartType.equals("body")) {
-                System.out.println("Executing addBody method...");
-                this.addBodyPart(new Body());
-            } else if (nextBodyPartType.equals("leg")) {
-                System.out.println("Executing addLeg method...");
-                this.addLeg(nextBodyPart);
-            } else if (nextBodyPartType.equals("antenna")) {
-                System.out.println("Executing addAntenna method...");
-                this.addAntenna(nextBodyPart);
-            } else if (nextBodyPartType.equals("eye")) {
-                System.out.println("Executing addEye method...");
-                this.addEye(nextBodyPart);
-            } else if (nextBodyPartType.equals("tail")) {
-                System.out.println("Executing addTail method...");
-                this.addBodyPart(new Tail());
-            }
-        } catch (InvalidBodyPartSequence invalidBodyPartSequence) {
-            invalidBodyPartSequence.printStackTrace();
+        String nextBodyPartType = nextBodyPart.getType();
+        if (nextBodyPartType.equals("head")) {
+            System.out.println("Executing addHead method...");
+            this.addBodyPart(new Head());
+        } else if (nextBodyPartType.equals("body")) {
+            System.out.println("Executing addBody method...");
+            this.addBodyPart(new Body());
+        } else if (nextBodyPartType.equals("leg")) {
+            System.out.println("Executing addLeg method...");
+            this.addLeg(nextBodyPart);
+        } else if (nextBodyPartType.equals("antenna")) {
+            System.out.println("Executing addAntenna method...");
+            this.addAntenna(nextBodyPart);
+        } else if (nextBodyPartType.equals("eye")) {
+            System.out.println("Executing addEye method...");
+            this.addEye(nextBodyPart);
+        } else if (nextBodyPartType.equals("tail")) {
+            System.out.println("Executing addTail method...");
+            this.addBodyPart(new Tail());
         }
 	}
 

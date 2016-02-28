@@ -1,5 +1,7 @@
 package uk.ac.cf.cs.beetle;
 
+import uk.ac.cf.cs.beetle.exception.InvalidBodyPartSequence;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
@@ -127,7 +129,11 @@ public class GameView implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				int randomNumber = playerDice.generateRandomNumber();
 				BodyPart nextBodyPart = new BodyPart(randomNumber);
-				beetle.addBodyPart(nextBodyPart);
+                try {
+                    beetle.addBodyPart(nextBodyPart);
+                } catch (InvalidBodyPartSequence ex) {
+                    launchProblemDialog(p, ex);
+                }
 				beetle.repaint();
 				playerDice.repaint();
 				System.out.println("Number of BodyParts: "+beetle.getNumberOfBodyParts());
@@ -158,6 +164,13 @@ public class GameView implements ActionListener {
 				player.getName()+" has won the game!",
 				"BeetleDice2D - Winner!",
 				JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public void launchProblemDialog(Player player, InvalidBodyPartSequence e){
+		JOptionPane.showMessageDialog(frame,
+				player.getName()+": "+ e.getMessage(),
+				"BeetleDice2D - Error!",
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override
