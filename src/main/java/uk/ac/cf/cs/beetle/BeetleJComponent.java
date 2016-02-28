@@ -40,7 +40,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	 * Constructs a Beetle for the player with an array of null-type BodyParts.
 	 */
 	public BeetleJComponent() {
-        this.beetleRenderer = new BeetleRenderer(this.getGraphics());
+        this.beetleRenderer = new Java2DBeetleRenderer(this.getGraphics());
 		this.setPreferredSize(new Dimension(200, 200));
 		beetleBodyParts = new Vector<BodyPart>(13);
 		File currentDir = new File(".");
