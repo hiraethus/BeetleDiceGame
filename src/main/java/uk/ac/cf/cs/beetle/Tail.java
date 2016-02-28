@@ -5,7 +5,7 @@ import uk.ac.cf.cs.beetle.exception.InvalidBodyPartSequence;
 public class Tail implements IBodyPart {
     @Override
     public boolean canAppendToBeetle(Beetle beetle) throws InvalidBodyPartSequence {
-        boolean doesntHaveBody = beetle.getBodyParts().stream()
+        boolean doesntHaveBody = ! beetle.getBodyParts().stream()
                 .map(bodyPart -> bodyPart.getClass())
                 .anyMatch(bpClass -> bpClass == Body.class);
 

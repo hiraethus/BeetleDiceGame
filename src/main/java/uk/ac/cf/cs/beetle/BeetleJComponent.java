@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class BeetleJComponent extends JComponent implements Beetle {
-    private final BeetleRenderer beetleRenderer;
+    private BeetleRenderer beetleRenderer = null;
     private Vector<BodyPart> beetleBodyParts;
 	public boolean textVisible = false; // REMOVE LATER!!
 
@@ -40,7 +40,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	 * Constructs a Beetle for the player with an array of null-type BodyParts.
 	 */
 	public BeetleJComponent() {
-        this.beetleRenderer = new Java2DBeetleRenderer(this.getGraphics());
+
 		this.setPreferredSize(new Dimension(200, 200));
 		beetleBodyParts = new Vector<BodyPart>(13);
 		File currentDir = new File(".");
@@ -247,6 +247,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	 */
 	@Override
 	public void paint(Graphics g) {
+        beetleRenderer = new Java2DBeetleRenderer(g);
 		int numberOfLegs = 0;
 		int numberOfAntennae = 0;
 		int numberOfEyes = 0;
