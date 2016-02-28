@@ -29,12 +29,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	private BufferedImage eye2 = null;
 	private BufferedImage antenna1 = null;
 	private BufferedImage antenna2 = null;
-	private BufferedImage leg1 = null;
-	private BufferedImage leg2 = null;
-	private BufferedImage leg3 = null;
-	private BufferedImage leg4 = null;
-	private BufferedImage leg5 = null;
-	private BufferedImage leg6 = null;
 
 	/**
 	 * Constructs a Beetle for the player with an array of null-type BodyParts.
@@ -52,12 +46,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
             eye2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye2.png"));
             antenna1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna1.png"));
             antenna2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna2.png"));
-            leg1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg1.png"));
-            leg2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg2.png"));
-            leg3 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg3.png"));
-            leg4 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg4.png"));
-            leg5 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg5.png"));
-            leg6 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/leg6.png"));
+
 
 		} catch (IOException e) {
 		}
@@ -94,7 +83,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
             this.addBodyPart(new Body());
         } else if (nextBodyPartType.equals("leg")) {
             System.out.println("Executing addLeg method...");
-            this.addLeg(nextBodyPart);
+            this.addBodyPart(new Leg());
         } else if (nextBodyPartType.equals("antenna")) {
             System.out.println("Executing addAntenna method...");
             this.addAntenna(nextBodyPart);
@@ -186,27 +175,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	}
 
 	/**
-	 * If the Beetle has a Body and it has less than 2 antennae (i.e. 0 or 1),
-	 * this method adds nextBodyPart to the nextBodyPart to the beetleBodyParts
-	 * array
-	 * 
-	 * @param nextBodyPart
-	 *            Body, Head, Leg etc.
-	 */
-	private void addLeg(BodyPart nextBodyPart) {
-		if (this.hasBodyPartOfType("body")) {
-			int numberOfLegs = this.numberOfBodyPartType("leg");
-			if (numberOfLegs < 6) {
-				beetleBodyParts.add(nextBodyPart);
-			} else {
-				// "Your Beetle already has 6 legs!"
-			}
-		} else {
-			// "Your Beetle needs a Body first!"
-		}
-	}
-
-	/**
 	 * Removes last BodyPart added from array. For use with "Undo" option in
 	 * game. Added bonus to add but non-essential.
 	 */
@@ -236,15 +204,12 @@ public class BeetleJComponent extends JComponent implements Beetle {
 		return beetleBodyParts.size();
 	}
 	
-	
-
 	/**
 	 * Draws the beetle
 	 */
 	@Override
 	public void paint(Graphics g) {
         beetleRenderer = new Java2DBeetleRenderer(g);
-		int numberOfLegs = 0;
 		int numberOfAntennae = 0;
 		int numberOfEyes = 0;
 
@@ -259,9 +224,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
 		// Eyes
 		for (BodyPart bodyPartType : beetleBodyParts) {
 			String currentBodyPartType = bodyPartType.getType();
-			if (currentBodyPartType.equals("leg")) {
-				numberOfLegs++;
-			} else if (currentBodyPartType.equals("antenna")) {
+			if (currentBodyPartType.equals("antenna")) {
 				numberOfAntennae++;
 			} else if (currentBodyPartType.equals("eye")) {
 				numberOfEyes++;
@@ -271,42 +234,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
         for (IBodyPart bp: bodyParts) {
             bp.accept(beetleRenderer);
         }
-
-		// draws legs
-		if (numberOfLegs == 0) {
-			// Draw no legs
-		} else if (numberOfLegs == 1) {
-			g.drawImage(leg1, 0, 0, this.getWidth(), this.getHeight(), null);
-		} else if (numberOfLegs == 2) {
-			g.drawImage(leg1, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg2, 0, 0, this.getWidth(), this.getHeight(), null);
-		} else if (numberOfLegs == 3) {
-			g.drawImage(leg1, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg2, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg3, 0, 0, this.getWidth(), this.getHeight(), null);
-		} else if (numberOfLegs == 4) {
-			g.drawImage(leg1, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg2, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg3, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg4, 0, 0, this.getWidth(), this.getHeight(), null);
-		} else if (numberOfLegs == 5) {
-			g.drawImage(leg1, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg2, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg3, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg4, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg5, 0, 0, this.getWidth(), this.getHeight(), null);
-		} else if (numberOfLegs == 6) {
-			g.drawImage(leg1, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg2, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg3, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg4, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg5, 0, 0, this.getWidth(), this.getHeight(), null);
-			g.drawImage(leg6, 0, 0, this.getWidth(), this.getHeight(), null);
-		} else if (numberOfLegs > 6) {
-			// Throw TooManyBodyPartsException
-		} else if (numberOfLegs < 0) {
-			// Throw NegativeValueException
-		}
 
 		// draw antennae
 		if (numberOfAntennae == 1) {

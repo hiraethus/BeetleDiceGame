@@ -6,4 +6,8 @@ public interface BeetleRenderer {
     void visit(Body b);
 
     void visit(Tail t);
+
+    void visit(Leg leg);
+
+    void reset();
 }
