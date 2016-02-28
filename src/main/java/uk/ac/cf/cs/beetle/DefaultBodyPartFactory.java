@@ -4,13 +4,26 @@ package uk.ac.cf.cs.beetle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class DefaultBodyPartFactory implements BodyPartFactory {
     private final List<DieRollToBodyPartMapping> dieRollToBodyPartMappings = new ArrayList<>();
 
     @Override
     public IBodyPart createBodyPart(Integer integer) throws InvalidDieValue {
-        return null;
+        Optional<DieRollToBodyPartMapping> partOptional = dieRollToBodyPartMappings.stream()
+                .filter(mapping -> mapping.getDieRoll() == integer)
+                .findFirst();
+
+        if (partOptional.isPresent()) {
+            try {
+                return partOptional.get().getBodyPartClass().newInstance();
+            } catch (Exception e) { /* couldn't instantiate body part class */ }
+        }
+
+        throw new InvalidDieValue(
+            String.format("%d is not an available die value for this factory", integer)
+        );
     }
 
     @Override
