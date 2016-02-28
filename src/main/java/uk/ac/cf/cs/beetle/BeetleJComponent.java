@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -19,7 +20,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	private Vector<BodyPart> beetleBodyParts;
 	public boolean textVisible = false; // REMOVE LATER!!
 
-	private Collection<IBodyPart> bodyParts;
+	private Collection<IBodyPart> bodyParts = new ArrayList<>();
 
 	// beetlePartImages
 	private BufferedImage background = null;
