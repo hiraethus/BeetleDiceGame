@@ -14,11 +14,11 @@ public class Tail implements IBodyPart {
                 .anyMatch(bpClass -> bpClass == Tail.class);
 
         if (doesntHaveBody) {
-            throw new InvalidBodyPartSequence("");
+            throw new InvalidBodyPartSequence("The beetle needs a Body to have a Tail");
         }
 
         if (alreadyHasTail) {
-            throw new InvalidBodyPartSequence("");
+            throw new InvalidBodyPartSequence("The beetle already has a Tail");
         }
 
         return true;
