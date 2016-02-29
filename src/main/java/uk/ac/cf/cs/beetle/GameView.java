@@ -1,6 +1,8 @@
 package uk.ac.cf.cs.beetle;
 
 import uk.ac.cf.cs.beetle.exception.InvalidBodyPartSequence;
+import uk.ac.cf.cs.beetle.exception.InvalidDieRollToBodyPartMapping;
+import uk.ac.cf.cs.beetle.exception.InvalidDieValue;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -11,6 +13,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class GameView implements ActionListener {
+    private final BodyPartFactory bodyPartFactory = new DefaultBodyPartFactory();
+
 	private final String gameTitle = "Java Beetle-Dice Game";
 	private JFrame frame;
 	private int frameWidth = 512;
@@ -22,7 +26,19 @@ public class GameView implements ActionListener {
 	private Vector<JPanel> playerPanels; //Array of playerPanels
 
 	public GameView(String[] playerName) {
-		this.numberOfPlayers = playerName.length;
+
+        try {
+            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(1, Eye.class));
+            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(2, Antenna.class));
+            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(3, Leg.class));
+            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(4, Tail.class));
+            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(5, Head.class));
+            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(6, Body.class));
+        } catch (InvalidDieRollToBodyPartMapping invalidDieRollToBodyPartMapping) {
+            invalidDieRollToBodyPartMapping.printStackTrace();
+        }
+
+        this.numberOfPlayers = playerName.length;
 		frame = new JFrame(gameTitle);
 		frame.setSize(new Dimension(frameWidth, frameHeight));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,14 +144,16 @@ public class GameView implements ActionListener {
 		rollDiceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int randomNumber = playerDice.generateRandomNumber();
-				BodyPart nextBodyPart = new BodyPart(randomNumber);
+				playerDice.repaint();
                 try {
+				    IBodyPart nextBodyPart = bodyPartFactory.createBodyPart(randomNumber);
                     beetle.addBodyPart(nextBodyPart);
                 } catch (InvalidBodyPartSequence ex) {
                     launchProblemDialog(p, ex);
+                } catch (InvalidDieValue invalidDieValue) {
+                    invalidDieValue.printStackTrace();
                 }
-				beetle.repaint();
-				playerDice.repaint();
+                beetle.repaint();
 				System.out.println("Number of BodyParts: "+beetle.getNumberOfBodyParts());
 				if(p.hasWon()){
 					hideAllPlayerPanels();

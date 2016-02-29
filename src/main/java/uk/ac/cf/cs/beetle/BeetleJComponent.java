@@ -49,36 +49,6 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	}
 
 	/**
-	 * Checks the BodyPart type and executes the correct add method for that
-	 * particular BodyPart.
-	 * 
-	 * @param nextBodyPart
-	 */
-	public void addBodyPart(BodyPart nextBodyPart) throws InvalidBodyPartSequence {
-		// Using if statement, leads to other more bodypart specific add methods
-        String nextBodyPartType = nextBodyPart.getType();
-        if (nextBodyPartType.equals("head")) {
-            System.out.println("Executing addHead method...");
-            this.addBodyPart(new Head());
-        } else if (nextBodyPartType.equals("body")) {
-            System.out.println("Executing addBody method...");
-            this.addBodyPart(new Body());
-        } else if (nextBodyPartType.equals("leg")) {
-            System.out.println("Executing addLeg method...");
-            this.addBodyPart(new Leg());
-        } else if (nextBodyPartType.equals("antenna")) {
-            System.out.println("Executing addAntenna method...");
-            this.addBodyPart(new Antenna());
-        } else if (nextBodyPartType.equals("eye")) {
-            System.out.println("Executing addEye method...");
-            this.addBodyPart(new Eye());
-        } else if (nextBodyPartType.equals("tail")) {
-            System.out.println("Executing addTail method...");
-            this.addBodyPart(new Tail());
-        }
-	}
-
-	/**
 	 * Returns the number of BodyParts that the Beetle possesses.
 	 * May be used for a progress bar in the GUI (JSlider).
 	 * @return
