@@ -9,7 +9,7 @@ public class Eye implements IBodyPart {
     public boolean canAppendToBeetle(Beetle beetle) throws InvalidBodyPartSequence {
         boolean hasHead = beetle.getBodyParts().stream()
                 .map(bp -> bp.getClass())
-                .anyMatch(cls -> cls == Body.class);
+                .anyMatch(cls -> cls == Head.class);
 
         boolean alreadyHasMaxEyes = beetle.getBodyParts().stream()
                 .map(bp -> bp.getClass())
