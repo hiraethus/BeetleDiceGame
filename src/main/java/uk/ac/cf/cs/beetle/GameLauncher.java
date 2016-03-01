@@ -2,7 +2,6 @@ package uk.ac.cf.cs.beetle;
 
 import com.sun.imageio.plugins.common.ImageUtil;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,7 +13,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.ImageIcon;
 
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +20,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 
-public class GameLauncher implements ActionListener, ItemListener {
+public class GameLauncher implements ItemListener {
 	private final String frameTitle = "BeetleDice 2D - Game Launcher";
 	private final int frameWidth = 260;
 	private final int frameLength = 560;
@@ -254,12 +252,6 @@ public class GameLauncher implements ActionListener, ItemListener {
 	public static void main(String[] args) {
 		GameLauncher gL = new GameLauncher();
 		System.out.println("Number of checkboxes selected: "+ gL.getNumberOfPlayers());
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
