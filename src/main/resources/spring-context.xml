@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="bodyPartFactory" class="uk.ac.cf.cs.beetle.DefaultBodyPartFactory">
+        <constructor-arg>
+            <list>
+                <ref bean="eyeDieRollBodyMapping" />
+                <ref bean="antennaDieRollBodyMapping" />
+                <ref bean="legDieRollBodyMapping" />
+                <ref bean="tailDieRollBodyMapping" />
+                <ref bean="headDieRollBodyMapping" />
+                <ref bean="bodyDieRollBodyMapping" />
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="eyeDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
+        <constructor-arg value="1" type="Integer" />
+        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Eye" />
+    </bean>
+
+    <bean id="antennaDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
+        <constructor-arg value="2" type="Integer" />
+        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Antenna" />
+    </bean>
+
+    <bean id="legDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
+        <constructor-arg value="3" type="Integer" />
+        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Leg" />
+    </bean>
+
+    <bean id="tailDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
+        <constructor-arg value="4" type="Integer" />
+        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Tail" />
+    </bean>
+
+    <bean id="headDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
+        <constructor-arg value="5" type="Integer" />
+        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Head" />
+    </bean>
+
+    <bean id="bodyDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
+        <constructor-arg value="6" type="Integer" />
+        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Body" />
+    </bean>
+</beans>

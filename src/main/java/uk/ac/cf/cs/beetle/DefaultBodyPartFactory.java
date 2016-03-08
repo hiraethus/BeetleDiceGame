@@ -12,6 +12,14 @@ import java.util.Optional;
 public class DefaultBodyPartFactory implements BodyPartFactory {
     private final List<DieRollToBodyPartMapping> dieRollToBodyPartMappings = new ArrayList<>();
 
+    public DefaultBodyPartFactory(List<DieRollToBodyPartMapping> mappings) throws InvalidDieRollToBodyPartMapping {
+        for (DieRollToBodyPartMapping mapping : mappings) {
+            this.addMapping(mapping);
+        }
+    }
+
+    public DefaultBodyPartFactory() { }
+
     @Override
     public IBodyPart createBodyPart(Integer integer) throws InvalidDieValue {
         Optional<DieRollToBodyPartMapping> partOptional = dieRollToBodyPartMappings.stream()

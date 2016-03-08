@@ -1,7 +1,8 @@
 package uk.ac.cf.cs.beetle;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import uk.ac.cf.cs.beetle.exception.InvalidBodyPartSequence;
-import uk.ac.cf.cs.beetle.exception.InvalidDieRollToBodyPartMapping;
 import uk.ac.cf.cs.beetle.exception.InvalidDieValue;
 
 import java.awt.*;
@@ -13,7 +14,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class GameView implements ActionListener {
-    private final BodyPartFactory bodyPartFactory = new DefaultBodyPartFactory();
+    private final BodyPartFactory bodyPartFactory;
 
 	private final String gameTitle = "Java Beetle-Dice Game";
 	private JFrame frame;
@@ -26,17 +27,8 @@ public class GameView implements ActionListener {
 	private Vector<JPanel> playerPanels; //Array of playerPanels
 
 	public GameView(String[] playerName) {
-
-        try {
-            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(1, Eye.class));
-            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(2, Antenna.class));
-            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(3, Leg.class));
-            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(4, Tail.class));
-            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(5, Head.class));
-            bodyPartFactory.addMapping(new DieRollToBodyPartMapping(6, Body.class));
-        } catch (InvalidDieRollToBodyPartMapping invalidDieRollToBodyPartMapping) {
-            invalidDieRollToBodyPartMapping.printStackTrace();
-        }
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-context.xml");
+		bodyPartFactory = ctx.getBean("bodyPartFactory", DefaultBodyPartFactory.class);
 
         this.numberOfPlayers = playerName.length;
 		frame = new JFrame(gameTitle);
