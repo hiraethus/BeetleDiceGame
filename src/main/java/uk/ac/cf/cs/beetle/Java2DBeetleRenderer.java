@@ -3,12 +3,16 @@ package uk.ac.cf.cs.beetle;
 import com.sun.imageio.plugins.common.ImageUtil;
 
 import javax.imageio.ImageIO;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-public class Java2DBeetleRenderer implements BeetleRenderer {
-    private final Graphics graphics;
+public class Java2DBeetleRenderer extends JComponent implements BeetleRenderer, PropertyChangeListener {
+    private Graphics graphics;
+    private final Beetle beetle;
     private BufferedImage tail;
     private BufferedImage head;
     private BufferedImage body;
@@ -20,6 +24,7 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
     private BufferedImage leg4;
     private BufferedImage leg5;
     private BufferedImage leg6;
+    private BufferedImage background;
 
     private int antennaCount = 0;
     private BufferedImage antenna1;
@@ -30,8 +35,12 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
     private BufferedImage eye2;
 
 
-    public Java2DBeetleRenderer(Graphics g) {
-        this.graphics = g;
+    public Java2DBeetleRenderer(Beetle b) {
+        this.beetle = b;
+        this.setPreferredSize(new Dimension(200, 200));
+        b.addPropertyChangeListener(this);
+        this.graphics = this.getGraphics();
+
         try {
             head = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/head.png"));
             body = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/body.png"));
@@ -46,6 +55,7 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
             eye2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/eye2.png"));
             antenna1 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna1.png"));
             antenna2 = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/antenna2.png"));
+            background = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/background.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -122,5 +132,31 @@ public class Java2DBeetleRenderer implements BeetleRenderer {
         this.legCount = 0;
         this.antennaCount = 0;
         this.eyeCount = 0;
+    }
+
+
+    /**
+     * Draws the beetle
+     */
+    @Override
+    public void paint(Graphics g) {
+        graphics = g;
+        drawBackground(g);
+
+        for (IBodyPart bp: beetle.getBodyParts()) {
+            bp.accept(this);
+        }
+    }
+
+    private void drawBackground(Graphics g) {
+        g.setColor(Color.white);
+        g.fillRect(0, 0, 195, 195);
+        g.setColor(Color.black);
+        g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        this.repaint();
     }
 }

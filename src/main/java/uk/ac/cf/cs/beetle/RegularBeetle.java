@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,8 +17,10 @@ import java.util.Collection;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class BeetleJComponent extends JComponent implements Beetle {
+public class RegularBeetle implements Beetle {
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Collection<IBodyPart> bodyParts = new ArrayList<>();
+    public static final String ADDED_BODY_PART = "body part added";
 
 	// beetlePartImages
 	private BufferedImage background = null;
@@ -24,15 +28,11 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	/**
 	 * Constructs a Beetle for the player with an array of null-type BodyParts.
 	 */
-	public BeetleJComponent() {
-		this.setPreferredSize(new Dimension(200, 200));
+	public RegularBeetle() {
 		File currentDir = new File(".");
 		System.out.println(currentDir.getAbsolutePath());
 		// Loading BeetlePart images below...
-		try {
-            background = ImageIO.read(ImageUtil.class.getResource("/BeetlePartImages/background.png"));
-		} catch (IOException e) {
-		}
+
 
 	}
 
@@ -45,6 +45,7 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	public void addBodyPart(IBodyPart bodyPart) throws InvalidBodyPartSequence {
         if (bodyPart.canAppendToBeetle(this)) {
             this.bodyParts.add(bodyPart);
+            this.pcs.firePropertyChange(ADDED_BODY_PART, null, bodyPart);
         }
 	}
 
@@ -56,24 +57,14 @@ public class BeetleJComponent extends JComponent implements Beetle {
 	public int getNumberOfBodyParts() {
 		return bodyParts.size();
 	}
-	
-	/**
-	 * Draws the beetle
-	 */
-	@Override
-	public void paint(Graphics g) {
-        BeetleRenderer beetleRenderer = new Java2DBeetleRenderer(g);
-        drawBackground(g);
 
-        for (IBodyPart bp: bodyParts) {
-            bp.accept(beetleRenderer);
-        }
-	}
 
-    private void drawBackground(Graphics g) {
-        g.setColor(Color.white);
-        g.fillRect(0, 0, 195, 195);
-        g.setColor(Color.black);
-        g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        this.pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        this.pcs.removePropertyChangeListener(listener);
     }
 }

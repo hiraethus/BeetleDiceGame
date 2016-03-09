@@ -13,7 +13,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class GameView implements ActionListener {
+public class GameView {
     private final BodyPartFactory bodyPartFactory;
 
 	private final String gameTitle = "Java Beetle-Dice Game";
@@ -23,7 +23,7 @@ public class GameView implements ActionListener {
 	JPanel mainPanel;
 	
 	private int numberOfPlayers;
-	Player humanPlayer[];//Array of players
+	Player players[];//Array of players
 	private Vector<JPanel> playerPanels; //Array of playerPanels
 
 	public GameView(String[] playerName) {
@@ -92,12 +92,11 @@ public class GameView implements ActionListener {
 
 		// ======Panels for each Player================
 
-		humanPlayer = new HumanPlayer[numberOfPlayers];
+		players = new Player[numberOfPlayers];
 		playerPanels = new Vector<JPanel>(numberOfPlayers);
 		for (int i=0; i < numberOfPlayers; i++) {
-			humanPlayer[i] = new HumanPlayer();
-			humanPlayer[i].setName(playerName[i]);
-			JPanel playerPanel = makePlayerPanel(humanPlayer[i]);
+			players[i] = new Player(playerName[i], new RegularBeetle());
+			JPanel playerPanel = makePlayerPanel(players[i]);
 			playerPanels.add(playerPanel);
 		}
 		// =======Add player panels from Vector to grid =======
@@ -116,16 +115,17 @@ public class GameView implements ActionListener {
 	 * @return
 	 */
 	public JPanel makePlayerPanel(final Player p) {
-		final BeetleJComponent beetle = p.getBeetle();
-		beetle.setBorder(new EtchedBorder());
-		beetle.repaint();
+		final Beetle beetle = p.getBeetle();
+		final Java2DBeetleRenderer beetleRenderer = new Java2DBeetleRenderer(beetle);
+
+		beetleRenderer.setBorder(new EtchedBorder());
 		final Die playerDice = new Die();
 
 		JPanel playerPanel = new JPanel();
 		playerPanel.setBorder(new TitledBorder(p.getName()));
 		playerPanel.setLayout(new BorderLayout());
 
-		playerPanel.add(beetle, BorderLayout.CENTER);
+		playerPanel.add(beetleRenderer, BorderLayout.CENTER);
 		JPanel playerControlPanel = new JPanel();
 		playerControlPanel.setLayout(new GridLayout(1, 2));
 		playerControlPanel.setMinimumSize(new Dimension(200,100));
@@ -145,8 +145,7 @@ public class GameView implements ActionListener {
                 } catch (InvalidDieValue invalidDieValue) {
                     invalidDieValue.printStackTrace();
                 }
-                beetle.repaint();
-				System.out.println("Number of BodyParts: "+beetle.getNumberOfBodyParts());
+				System.out.println("Number of BodyParts: "+beetle.getBodyParts().size());
 				if(p.hasWon()){
 					hideAllPlayerPanels();
 					launchWinnerDialog(p);
@@ -181,11 +180,5 @@ public class GameView implements ActionListener {
 				player.getName()+": "+ e.getMessage(),
 				"BeetleDice2D - Error!",
 				JOptionPane.ERROR_MESSAGE);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 }

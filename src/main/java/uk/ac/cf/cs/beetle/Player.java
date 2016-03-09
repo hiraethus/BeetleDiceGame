@@ -1,20 +1,15 @@
 package uk.ac.cf.cs.beetle;
 
-public abstract class Player {
+public class Player {
 	private String playerName;
-	private BeetleJComponent playerBeetle;
+	private Beetle playerBeetle;
 
-	public Player() {
-		this.playerName = "";
-		this.playerBeetle = new BeetleJComponent();
-	}
-
-	public Player(String name) {
+	public Player(String name, Beetle playerBeetle) {
 		this.playerName = name;
-		this.playerBeetle = new BeetleJComponent();
+		this.playerBeetle = playerBeetle;
 	}
 
-	public BeetleJComponent getBeetle() {
+	public Beetle getBeetle() {
 		return playerBeetle;
 	}
 
@@ -22,14 +17,9 @@ public abstract class Player {
 		return playerName;
 	}
 	
-	public void setName(String playerName) {
-		this.playerName = playerName;
-	}
-	
-	
 	public boolean hasWon(){
 		boolean winStatus;
-		if(playerBeetle.getNumberOfBodyParts()==12){
+		if(playerBeetle.getBodyParts().size() == 12){
 			winStatus = true;
 		} else {
 			winStatus = false;

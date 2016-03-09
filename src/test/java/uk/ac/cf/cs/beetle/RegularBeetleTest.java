@@ -11,11 +11,11 @@ import static org.junit.Assert.fail;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class DefaultBeetleTest {
+public class RegularBeetleTest {
 
     @Test
     public void shouldAddBodyPartWhenCanAddBodyPart() throws Exception {
-        DefaultBeetle beetle = new DefaultBeetle();
+        RegularBeetle beetle = new RegularBeetle();
         IBodyPart mockBodyPart = mock(IBodyPart.class);
         given(mockBodyPart.canAppendToBeetle(beetle)).willReturn(true);
 
@@ -31,7 +31,7 @@ public class DefaultBeetleTest {
     @Test
     public void shouldThrowInvalidBodyPartSequenceWhenCannotAddBodyPart() throws Exception {
         // given
-        DefaultBeetle beetle = new DefaultBeetle();
+        RegularBeetle beetle = new RegularBeetle();
         IBodyPart mockBodyPart = mock(IBodyPart.class);
         InvalidBodyPartSequence exceptionThrown = new InvalidBodyPartSequence("Can't add this");
         given(mockBodyPart.canAppendToBeetle(beetle)).willThrow(exceptionThrown);
