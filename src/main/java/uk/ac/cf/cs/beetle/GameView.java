@@ -120,6 +120,8 @@ public class GameView {
 
 		beetleRenderer.setBorder(new EtchedBorder());
 		final Die playerDice = new Die();
+		playerDice.setPreferredSize(new Dimension(100, 100));
+		playerDice.setMinimumSize(new Dimension(100,100));
 
 		JPanel playerPanel = new JPanel();
 		playerPanel.setBorder(new TitledBorder(p.getName()));
@@ -127,7 +129,7 @@ public class GameView {
 
 		playerPanel.add(beetleRenderer, BorderLayout.CENTER);
 		JPanel playerControlPanel = new JPanel();
-		playerControlPanel.setLayout(new GridLayout(1, 2));
+
 		playerControlPanel.setMinimumSize(new Dimension(200,100));
 		playerPanel.add(playerControlPanel, BorderLayout.SOUTH);
 		final JButton rollDiceButton = new JButton("Roll Dice");
@@ -155,8 +157,22 @@ public class GameView {
 			}
 		});
 
-		playerControlPanel.add(rollDiceButton);
-		playerControlPanel.add(playerDice);
+		playerControlPanel.setLayout(new GridBagLayout());
+		GridBagConstraints controlGbc = new GridBagConstraints();
+		controlGbc.gridx = 0;
+		controlGbc.gridy = 0;
+		controlGbc.fill = GridBagConstraints.BOTH;
+		controlGbc.gridwidth = 1;
+
+		playerControlPanel.add(rollDiceButton, controlGbc);
+
+		controlGbc.gridx = 1;
+		playerControlPanel.add(playerDice, controlGbc);
+
+		controlGbc.gridx = 0;
+		controlGbc.gridy = 1;
+		controlGbc.gridwidth = 2;
+		playerControlPanel.add(new BeetleProgressBar(beetle, 12), controlGbc);
 
 
 		return playerPanel;
