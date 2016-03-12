@@ -140,6 +140,7 @@ public class Java2DBeetleRenderer extends JComponent implements BeetleRenderer, 
      */
     @Override
     public void paint(Graphics g) {
+        reset();
         graphics = g;
         drawBackground(g);
 
