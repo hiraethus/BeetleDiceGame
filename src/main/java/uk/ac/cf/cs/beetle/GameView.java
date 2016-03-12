@@ -15,6 +15,7 @@ public class GameView {
     private final BodyPartFactory bodyPartFactory;
 
 	private final String gameTitle = "Java Beetle-Dice Game";
+	private final PlayerFactory playerFactory;
 	private JFrame frame;
 	private int frameWidth = 512;
 	private int frameHeight = 384;
@@ -24,8 +25,9 @@ public class GameView {
 	Player players[];//Array of players
 	private Vector<JPanel> playerPanels; //Array of playerPanels
 
-	public GameView(BodyPartFactory bodyFactory) {
+	public GameView(BodyPartFactory bodyFactory, PlayerFactory playerFactory) {
 		bodyPartFactory = bodyFactory;
+		this.playerFactory = playerFactory;
 	}
 
 	public void setPlayers(String[] playerName) {
@@ -94,7 +96,8 @@ public class GameView {
 		players = new Player[numberOfPlayers];
 		playerPanels = new Vector<JPanel>(numberOfPlayers);
 		for (int i=0; i < numberOfPlayers; i++) {
-			players[i] = new Player(playerName[i], new RegularBeetle());
+			players[i] = playerFactory.createPlayer();
+			players[i].setName(playerName[i]);
 			JPanel playerPanel = makePlayerPanel(players[i]);
 			playerPanels.add(playerPanel);
 		}
@@ -113,7 +116,7 @@ public class GameView {
 	 * 
 	 * @return
 	 */
-	public JPanel makePlayerPanel(final Player p) {
+	public JPanel  makePlayerPanel(final Player p) {
 		final Beetle beetle = p.getBeetle();
 		final Java2DBeetleRenderer beetleRenderer = new Java2DBeetleRenderer(beetle);
 

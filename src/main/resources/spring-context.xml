@@ -15,7 +15,23 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         <constructor-arg>
             <ref bean="bodyPartFactory" />
         </constructor-arg>
+        <constructor-arg>
+            <ref bean="playerFactory" />
+        </constructor-arg>
     </bean>
+
+    <bean id="playerFactory"
+          class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+        <property name="serviceLocatorInterface" value="uk.ac.cf.cs.beetle.PlayerFactory"/>
+    </bean>
+
+    <bean id="player" class="uk.ac.cf.cs.beetle.Player" scope="prototype">
+        <constructor-arg>
+            <ref bean="beetle" />
+        </constructor-arg>
+    </bean>
+
+    <bean id="beetle" class="uk.ac.cf.cs.beetle.RegularBeetle" scope="prototype" />
 
     <bean id="bodyPartFactory"
           class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">

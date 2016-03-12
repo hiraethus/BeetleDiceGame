@@ -1,11 +1,10 @@
 package uk.ac.cf.cs.beetle;
 
 public class Player {
-	private String playerName;
+	private String playerName = null;
 	private Beetle playerBeetle;
 
-	public Player(String name, Beetle playerBeetle) {
-		this.playerName = name;
+	public Player(Beetle playerBeetle) {
 		this.playerBeetle = playerBeetle;
 	}
 
@@ -16,6 +15,10 @@ public class Player {
 	public String getName() {
 		return playerName;
 	}
+
+	public void setName(String name) {
+        this.playerName = name;
+    }
 	
 	public boolean hasWon(){
 		boolean winStatus;
