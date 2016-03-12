@@ -1,8 +1,6 @@
 package uk.ac.cf.cs.beetle;
 
 import com.sun.imageio.plugins.common.ImageUtil;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,18 +52,16 @@ public class GameLauncher implements ItemListener {
 	private JCheckBox fourthPlayerCheckBox;
 	private JTextField fourthPlayerName;
 
-	private final ApplicationContext ctx;
-
 	//===Play Game Button and Panel =========================
 	private JPanel launchGamePanel;
 	private JButton launchButton;
 
 	//===Constructors =======================================
-	public GameLauncher(){
+	public GameLauncher(GameView view) {
 		//Initialise frame and properties of
 		//its border and grid.
+		this.game = view;
 
-		this.ctx = new ClassPathXmlApplicationContext("spring-context.xml");
 
 		frame = new JFrame(frameTitle);
 		frame.setSize(frameWidth, frameLength);
@@ -223,7 +219,6 @@ public class GameLauncher implements ItemListener {
 					JOptionPane.ERROR_MESSAGE);
 			firstPlayerCheckBox.setSelected(true);
 		} else {
-			game = (GameView) ctx.getBean("gameView", GameView.class);
 			game.setPlayers(playerName);
 			frame.dispose(); //kill frame and return memory
 		}
@@ -251,14 +246,4 @@ public class GameLauncher implements ItemListener {
 		return currentPlayerName;
 
 	}
-
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		GameLauncher gL = new GameLauncher();
-		System.out.println("Number of checkboxes selected: "+ gL.getNumberOfPlayers());
-	}
-
 }

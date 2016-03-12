@@ -55,7 +55,7 @@
               <configuration>
                   <archive>
                       <manifest>
-                          <mainClass>uk.ac.cf.cs.beetle.GameLauncher</mainClass>
+                          <mainClass>uk.ac.cf.cs.beetle.BeetleDrive</mainClass>
                       </manifest>
                   </archive>
                   <descriptorRefs>

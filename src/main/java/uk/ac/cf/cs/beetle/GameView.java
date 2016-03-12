@@ -52,7 +52,7 @@ public class GameView {
 		newGameMenuItem.setMnemonic(KeyEvent.VK_N);
 		newGameMenuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				GameLauncher gL = new GameLauncher();
+				frame.setVisible(false);
 				frame.dispose(); //kill frame and return memory
 			}
 		});
