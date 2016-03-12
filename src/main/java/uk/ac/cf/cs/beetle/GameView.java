@@ -121,9 +121,10 @@ public class GameView {
 		final Java2DBeetleRenderer beetleRenderer = new Java2DBeetleRenderer(beetle);
 
 		beetleRenderer.setBorder(new EtchedBorder());
-		final Die playerDice = new Die();
-		playerDice.setPreferredSize(new Dimension(100, 100));
-		playerDice.setMinimumSize(new Dimension(100,100));
+		final Die die = new DefaultDie();
+		final DieRenderer dieRender = new DieRenderer(die);
+		dieRender.setPreferredSize(new Dimension(100, 100));
+		dieRender.setMinimumSize(new Dimension(100, 100));
 
 		JPanel playerPanel = new JPanel();
 		playerPanel.setBorder(new TitledBorder(p.getName()));
@@ -139,8 +140,7 @@ public class GameView {
 		rollDiceButton.setMinimumSize(new Dimension(100,100));
 		rollDiceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int randomNumber = playerDice.generateRandomNumber();
-				playerDice.repaint();
+				int randomNumber = die.rollDie();
                 try {
 				    IBodyPart nextBodyPart = bodyPartFactory.createBodyPart(randomNumber);
                     beetle.addBodyPart(nextBodyPart);
@@ -169,7 +169,7 @@ public class GameView {
 		playerControlPanel.add(rollDiceButton, controlGbc);
 
 		controlGbc.gridx = 1;
-		playerControlPanel.add(playerDice, controlGbc);
+		playerControlPanel.add(dieRender, controlGbc);
 
 		controlGbc.gridx = 0;
 		controlGbc.gridy = 1;
