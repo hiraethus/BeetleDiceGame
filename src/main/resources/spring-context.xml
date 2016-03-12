@@ -17,46 +17,15 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         </constructor-arg>
     </bean>
 
-    <bean id="bodyPartFactory" class="uk.ac.cf.cs.beetle.DefaultBodyPartFactory">
-        <constructor-arg>
-            <list>
-                <ref bean="eyeDieRollBodyMapping" />
-                <ref bean="antennaDieRollBodyMapping" />
-                <ref bean="legDieRollBodyMapping" />
-                <ref bean="tailDieRollBodyMapping" />
-                <ref bean="headDieRollBodyMapping" />
-                <ref bean="bodyDieRollBodyMapping" />
-            </list>
-        </constructor-arg>
+    <bean id="bodyPartFactory"
+          class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+        <property name="serviceLocatorInterface" value="uk.ac.cf.cs.beetle.BodyPartFactory"/>
     </bean>
 
-    <bean id="eyeDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
-        <constructor-arg value="1" type="Integer" />
-        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Eye" />
-    </bean>
-
-    <bean id="antennaDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
-        <constructor-arg value="2" type="Integer" />
-        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Antenna" />
-    </bean>
-
-    <bean id="legDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
-        <constructor-arg value="3" type="Integer" />
-        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Leg" />
-    </bean>
-
-    <bean id="tailDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
-        <constructor-arg value="4" type="Integer" />
-        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Tail" />
-    </bean>
-
-    <bean id="headDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
-        <constructor-arg value="5" type="Integer" />
-        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Head" />
-    </bean>
-
-    <bean id="bodyDieRollBodyMapping" class="uk.ac.cf.cs.beetle.DieRollToBodyPartMapping">
-        <constructor-arg value="6" type="Integer" />
-        <constructor-arg type="java.lang.Class" value="uk.ac.cf.cs.beetle.Body" />
-    </bean>
+    <bean id="eye" name="1" class="uk.ac.cf.cs.beetle.Eye" scope="singleton" />
+    <bean id="antenna" name="2" class="uk.ac.cf.cs.beetle.Antenna" scope="singleton" />
+    <bean id="leg" name="3" class="uk.ac.cf.cs.beetle.Leg" scope="singleton" />
+    <bean id="tail" name="4" class="uk.ac.cf.cs.beetle.Tail" scope="singleton" />
+    <bean id="head" name="5" class="uk.ac.cf.cs.beetle.Head" scope="singleton" />
+    <bean id="body" name="6" class="uk.ac.cf.cs.beetle.Body" scope="singleton" />
 </beans>
