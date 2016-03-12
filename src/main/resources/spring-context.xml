@@ -4,6 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="gameView" class="uk.ac.cf.cs.beetle.GameView" scope="prototype">
+        <constructor-arg index="0">
+            <ref bean="bodyPartFactory" />
+        </constructor-arg>
+    </bean>
+
     <bean id="bodyPartFactory" class="uk.ac.cf.cs.beetle.DefaultBodyPartFactory">
         <constructor-arg>
             <list>

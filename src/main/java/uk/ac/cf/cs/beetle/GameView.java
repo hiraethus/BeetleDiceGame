@@ -26,10 +26,11 @@ public class GameView {
 	Player players[];//Array of players
 	private Vector<JPanel> playerPanels; //Array of playerPanels
 
-	public GameView(String[] playerName) {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-context.xml");
-		bodyPartFactory = ctx.getBean("bodyPartFactory", DefaultBodyPartFactory.class);
+	public GameView(BodyPartFactory bodyFactory) {
+		bodyPartFactory = bodyFactory;
+	}
 
+	public void setPlayers(String[] playerName) {
         this.numberOfPlayers = playerName.length;
 		frame = new JFrame(gameTitle);
 		frame.setSize(new Dimension(frameWidth, frameHeight));
