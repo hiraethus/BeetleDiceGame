@@ -1,7 +1,5 @@
 package uk.ac.cf.cs.beetle;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import uk.ac.cf.cs.beetle.exception.InvalidBodyPartSequence;
 import uk.ac.cf.cs.beetle.exception.InvalidDieValue;
 
